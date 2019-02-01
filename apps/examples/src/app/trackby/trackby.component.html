@@ -1,0 +1,29 @@
+<h4>No trackBy</h4>
+
+<button (click)="sortBy('id')">Sort by id</button>
+<button (click)="sortBy('name')">Sort by name</button>
+<cdk-virtual-scroll-viewport class="gkz-viewport" [itemSize]="20">
+  <div *cdkVirtualFor="let customer of customersObservable | async" class="customer-item">
+    {{customer.id}} - {{customer.name}}
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<h4>trackBy index</h4>
+
+<button (click)="sortBy('id')">Sort by id</button>
+<button (click)="sortBy('name')">Sort by name</button>
+<cdk-virtual-scroll-viewport class="gkz-viewport" [itemSize]="20">
+  <div *cdkVirtualFor="let customer of customersObservable | async; trackBy: indexTrackFn" class="customer-item">
+    {{customer.id}} - {{customer.name}}
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<h4>trackBy name</h4>
+
+<button (click)="sortBy('id')">Sort by id</button>
+<button (click)="sortBy('name')">Sort by name</button>
+<cdk-virtual-scroll-viewport class="gkz-viewport" [itemSize]="20">
+  <div *cdkVirtualFor="let customer of customersObservable | async; trackBy: nameTrackFn" class="customer-item">
+    {{customer.id}} - {{customer.name}}
+  </div>
+</cdk-virtual-scroll-viewport>

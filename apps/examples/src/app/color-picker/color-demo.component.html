@@ -11,9 +11,35 @@
 </div>
 <hr>
 <div class="example-focus-monitor">
-    <button cdkMonitorSubtreeFocus
-            (cdkFocusChange)="elementOrigin = formatOrigin($event); markForCheck()">
-      Focus Monitored Element ({{elementOrigin}})
-    </button>
+  <button cdkMonitorSubtreeFocus (cdkFocusChange)="elementOrigin = formatOrigin($event); markForCheck()">
+    Focus Monitored Element ({{elementOrigin}})
+  </button>
+</div>
+<hr>
+cdkTrapFocus
+<section>
+
+  <div cdkTrapFocus>
+    <input placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button type="submit">Submit</button>
   </div>
+
+  <h1>Outside the trap</h1>
+  <input placeholder="Outside" />
+
+</section>
+<hr>
+cdkTrapFocus typescript
+<input type="text" (focus)="showList()" (keyup)="handleKeyUp($event)" #trapper><br />
+<div *ngIf="isListVisible" #myList>
+  <exm-list-item *ngFor="let listItem of list" [item]="listItem" (itemSelected)="onSelectItem($event)">
+  </exm-list-item>
+</div>
+<h3>{{ selectedItem }} </h3>
+
+
+<button *ngIf="isListVisible" (click)="hideList()">Hide List</button>
+
+<div (click)="showList()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">select list</div>
 

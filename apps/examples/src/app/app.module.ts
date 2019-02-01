@@ -14,12 +14,23 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
 import { BidiModule } from '@angular/cdk/bidi';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { LayoutModule } from '@angular/cdk/layout';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
+// -------------------------------------//
 import { ColorPickerComponent } from './color-picker/color-picker.component';
 import { ColorPickerTriggerDirective } from './color-picker/color-picker-trigger.directive';
 import { ColorDirective } from './color-picker/color.directive';
 import { ColorDemoComponent } from "./color-picker/color-demo.component";
 import { AppRoutingModule } from './app-routing.module';
+import { ListItemComponent } from './list-item/list-item.component';
+import { TrackbyComponent } from './trackby/trackby.component';
+import { ScrollingStrategyComponent } from './scrolling-strategy/scrolling-strategy.component';
+import { BasicsComponent } from './basics/basics.component';
+import { SpecDataComponent } from './spec-data/spec-data.component';
 // --------------------------------------- //
+import { HttpClientModule } from '@angular/common/http';
+import { CdkDragDropConnectedSortingExample } from './drag-drop/drag-drop.component';
 
 
 
@@ -40,6 +51,9 @@ const config: ModalConfiguration = new ModalConfiguration();
     A11yModule,
     BidiModule,
     DragDropModule,
+    LayoutModule,
+    ScrollingModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
@@ -49,7 +63,13 @@ const config: ModalConfiguration = new ModalConfiguration();
     ColorPickerComponent,
     ColorPickerTriggerDirective,
     ColorDirective,
-    ColorDemoComponent
+    ColorDemoComponent,
+    ListItemComponent,
+    SpecDataComponent,
+    BasicsComponent,
+    ScrollingStrategyComponent,
+    TrackbyComponent,
+    CdkDragDropConnectedSortingExample
 
   ],
   bootstrap: [

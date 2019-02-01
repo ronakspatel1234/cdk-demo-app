@@ -1,0 +1,12 @@
+.gkz-viewport {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+    .cdk-virtual-scroll-content-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .customer-item {
+        height: 20px;
+    }
+}

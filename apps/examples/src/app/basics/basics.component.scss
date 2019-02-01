@@ -1,0 +1,35 @@
+.gkz-viewport {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+    .cdk-virtual-scroll-content-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .item {
+        height: 19px;
+        border-bottom: 1px dashed #aaa;
+    }
+    .item-alternate {
+        background: #ddd;
+    }
+}
+
+.gkz-horizontal-viewport {
+    height: 120px;
+    width: 200px;
+    border: 1px solid black;
+    .cdk-virtual-scroll-content-wrapper {
+        display: flex;
+        flex-direction: row;
+    }
+    .item {
+        width: 48px;
+        height: 100px;
+        border: 1px dashed #aaa;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        writing-mode: vertical-lr;
+    }
+}

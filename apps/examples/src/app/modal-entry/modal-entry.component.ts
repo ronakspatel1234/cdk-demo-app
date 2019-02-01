@@ -14,14 +14,12 @@ export class ModalEntryComponent implements OnInit {
     constructor(
         public modalRef: ModalContainerRef<ModalEntryComponent>,
         @Inject(MODAL_DATA) public data,
-    ) {
-
-
-    }
+        private service :ModalServiceDemo
+    ) {}
     ngOnInit() {
-        // this.service.getName().subscribe((name) => {
-        //     this.data.name = name;
-        // });
+        this.service.getName().subscribe((name) => {
+            this.data.name1 = name;
+        });
         
     }
     onSave(){

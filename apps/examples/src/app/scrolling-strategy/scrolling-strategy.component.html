@@ -1,0 +1,7 @@
+<h4>Scrolling strategy</h4>
+
+<cdk-virtual-scroll-viewport class="gkz-viewport">
+  <div *cdkVirtualFor="let item of items; let i = index" class="item">
+    Item #{{i}}: {{item}}
+  </div>
+</cdk-virtual-scroll-viewport>

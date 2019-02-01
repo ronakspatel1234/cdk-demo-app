@@ -1,0 +1,10 @@
+div {
+    background: #aaa;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+}
+.item-active {
+    background: #333;
+    color: white;
+  }

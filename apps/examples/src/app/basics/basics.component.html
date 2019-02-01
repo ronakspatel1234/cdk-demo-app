@@ -1,0 +1,51 @@
+<h4>Basic</h4>
+
+<cdk-virtual-scroll-viewport class="gkz-viewport" [itemSize]="20">
+  <div *cdkVirtualFor="let item of items; let i = index" class="item">
+    Item #{{i}}: {{item}}
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<h4>Context Variables</h4>
+
+<cdk-virtual-scroll-viewport class="gkz-viewport" [itemSize]="20*6">
+  <div [class.item-alternate]="odd" *cdkVirtualFor="
+    let item of items;
+    let i = index;
+    let count = count;
+    let first = first;
+    let last = last;
+    let even = even;
+    let odd = odd;">
+    <div class="item">Item #{{i}}: {{item}}</div>
+    <div class="item">count: {{count}}</div>
+    <div class="item">first: {{first}}</div>
+    <div class="item">last: {{last}}</div>
+    <div class="item">even: {{even ? 'Yes' : 'No'}}</div>
+    <div class="item">odd: {{odd ? 'Yes' : 'No'}}</div>
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<h4>Disable caching</h4>
+
+<cdk-virtual-scroll-viewport class="gkz-viewport" [itemSize]="20">
+  <div *cdkVirtualFor="let item of items; let i = index; templateCacheSize: 0" class="item">
+    Item #{{i}}: {{item}}
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<h4>Horizontal</h4>
+
+<cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="gkz-horizontal-viewport">
+  <div *cdkVirtualFor="let item of items; let i = index" class="item">
+    Item #{{i}}: {{item}}
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<h4>Custom buffer parameters</h4>
+
+<cdk-virtual-scroll-viewport itemSize="20" minBufferPx="50" maxBufferPx="200" class="gkz-viewport">
+  <div *cdkVirtualFor="let item of items; let i = index" class="item">
+    Item #{{i}}: {{item}}
+  </div>
+</cdk-virtual-scroll-viewport>

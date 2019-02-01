@@ -1,0 +1,7 @@
+
+<h4>DataSource</h4>
+
+<cdk-virtual-scroll-viewport itemSize="10" class="gkz-viewport">
+  <div *cdkVirtualFor="let item of dataSource" class="item">{{item.title || 'Loading...'}}</div>
+</cdk-virtual-scroll-viewport>
+
