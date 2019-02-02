@@ -1,0 +1,238 @@
+// Modal variables
+
+$modal-content-bg:        $light-primary-text !default;
+$modal-border-color:      $dark-dividers !default;
+$modal-inner-padding:     1rem !default;
+$modal-backdrop-opacity:  0.8 !default;
+
+$modal-header-bg:         $light-primary-text !default;
+$modal-header-color:      $dark-primary-text !default;
+$modal-border-radius:     0px !default;
+$modal-elevation-level:   1 !default;
+
+/// Default modal-variations
+/// @type Map
+/// @param {Color} $modal-header-bg - The default modal header background color.
+/// @param {Color} $modal-header-color - The default modal header text color.
+/// @param {Number} $modal-border-radius - The default border-radius of modal.
+/// @param {List} $font-family-base - The default font-family of modal.
+/// @param {Number} $font-size-base - The default modal content font-size.
+/// @param {Number} $modal-elevation-level - The default level of modal elevation.
+
+$modal-variations: () !default;
+$modal-variations: map-merge(
+  (
+    'modal-header-bg':            $modal-header-bg,
+    'modal-header-color':         $modal-header-color,
+    'modal-border-radius':        $modal-border-radius,
+    'modal-font-family':          $font-family-base,
+    'modal-font-size':            $font-size-base,
+    'modal-elevation-level':      $modal-elevation-level,
+  ),
+  $modal-variations
+);
+
+$modal-size: () !default;
+$modal-size: map-merge(
+  (
+    'modal-sm':          300px,
+    'modal-lg':          800px,
+    'modal-xl':          1140px,
+  ),
+  $modal-size
+);
+
+.cmn-modal {
+  @include position(fixed, 0, null, null, 0);
+  @include flex-column();
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
+  overflow: hidden;
+  outline: 0;
+  padding: 10px;
+  .modal-dialog {
+    position: relative;
+    width: auto;
+    pointer-events: none;
+    max-width: 500px;
+    &.content-centered {
+      margin: auto;
+    }
+    .modal-content {
+      @include flex-column();
+      position: relative;
+      width: 100%;
+      pointer-events: auto;
+      background-color: $modal-content-bg;
+      background-clip: padding-box;
+      border: 1px solid $modal-border-color;
+      border-radius: $modal-border-radius;
+      outline: 0;
+      box-shadow: cmn-elevation($elevations, $modal-elevation-level);
+    }
+  }
+  .modal-header {
+    @include flex-row-with-center();
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background: $modal-header-bg;
+    color:$modal-header-color;
+    padding: $modal-inner-padding;
+    border-bottom: 1px solid $modal-border-color;
+    border-top-left-radius: $modal-border-radius;
+    border-top-right-radius: $modal-border-radius;
+    cursor: move;
+    .modal-title {
+      margin-bottom: 0;
+    }
+    .modal-close-button {
+      align-self: baseline;
+      button {
+        -webkit-appearance: none;
+        background: transparent;
+        border: 0;
+        font-size: 2.5rem;
+      }
+    }
+  }
+  .modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: $modal-inner-padding;
+    text-align: left;
+  }
+  .modal-footer {
+    padding: $modal-inner-padding;
+    border-top: 1px solid $modal-border-color;
+    border-bottom-right-radius: $modal-border-radius;
+    border-bottom-left-radius: $modal-border-radius;
+    .footer-action-button {
+      @include flex-row-with-center();
+    }
+    button {
+      font-family: inherit;
+      &:last-child {
+        margin-left: 0.25rem;
+        [dir='rtl'] & {
+          margin-left: 0;
+          margin-right: 0.25rem;
+        }
+      }
+    }
+  }
+  &[dir='rtl'],
+  [dir='rtl'] & {
+    .modal-header {
+      text-align: right;
+    }
+    .modal-body {
+      text-align: right;
+    }
+    .modal-footer {
+      button {
+        &:last-child {
+          margin-left: 0;
+          margin-right: 0.25rem;
+        }
+      }
+    }
+  }
+  z-index: 1072;
+}
+
+@each $breakpoint, $value in $modal-size {
+  .modal-dialog {
+    &.#{$breakpoint} {
+      max-width: $value;
+    }
+  }
+}
+
+.cmn-modal-backdrop {
+  @include position(fixed, 0, null, null, 0);
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: $dark-primary-text;
+  opacity: $modal-backdrop-opacity;
+  z-index: 1071;
+}
+body {
+  &.modal-open {
+    overflow: hidden;
+    .cmn-modal {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+}
+
+@mixin cmn-modal-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $cmn-button-color: map-get($theme, primary);
+
+  @if variable-exists(modal) {
+    @each $key, $value in $modal {
+      $result: custom-map-validation($modal, $key, $modal-variations);
+      @if ($result) {
+        @error 'Modal: #{$result}';
+      }
+    }
+  }
+
+  .cmn-modal {
+    .modal-dialog {
+      .modal-content {
+        @if variable-exists(modal) {
+          border-radius: map-get($modal, 'modal-border-radius');
+          font-family: map-get($modal, 'modal-font-family');
+          font-size: map-get($modal, 'modal-font-size');
+          box-shadow: cmn-elevation($elevations, map-get($modal, 'modal-elevation-level'));
+        }
+      }
+    }
+    .modal-header {
+      background: map-get($theme, primary);
+      color: color-yiq(map-get($theme, primary));
+      @if variable-exists(modal) {
+        background: map-get($modal, 'modal-header-bg');
+        border-top-left-radius: map-get($modal, 'modal-border-radius');
+        border-top-right-radius: map-get($modal, 'modal-border-radius');
+        @if (map-has-key($modal, 'modal-header-color') == true) {
+          color: map-get($modal, 'modal-header-color');
+        }
+        @else {
+          @if(map-has-key($modal, 'modal-header-bg') == true) {
+            color: color-yiq(map-get($modal, 'modal-header-bg'));
+          }
+        }
+      }
+      button {
+        color: color-yiq(map-get($theme, primary));
+        @if variable-exists(modal) {
+          @if (map-has-key($modal, 'modal-header-color') == true) {
+            color: map-get($modal, 'modal-header-color');
+          }
+          @else {
+            @if(map-has-key($modal, 'modal-header-bg') == true) {
+              color: color-yiq(map-get($modal, 'modal-header-bg'));
+            }
+          }
+        }
+      }
+    }
+    .modal-footer {
+      @if variable-exists(modal) {
+        border-bottom-right-radius: map-get($modal, 'modal-border-radius');
+        border-bottom-left-radius: map-get($modal, 'modal-border-radius');
+      }
+    }
+  }
+  .cmn-modal-backdrop {
+    @if variable-exists(modal) {
+      opacity: map-get($modal, 'modal-backdrop-opacity');
+    }
+  }
+}

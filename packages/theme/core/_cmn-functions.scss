@@ -1,0 +1,66 @@
+// This function calculates the threshold value of the background and return a text color value.
+@function color-yiq($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+  @if($yiq >=$yiq-contrast-threshold) {
+    @return $yiq-text-dark;
+  }
+  @else {
+    @return $yiq-text-light;
+  }
+}
+
+// Request a theme color level
+@function theme-color-level($color-value, $level: 0) {
+  $color: $color-value;
+  $color-base: if($level > 0, $dark-primary-text, $light-primary-text);
+  $level: abs($level);
+
+  @return mix($color-base, $color, $level * $theme-color-interval);
+}
+
+/// Test if a custom-map($custom-map)
+/// has valid 'key' and 'values'.
+/// @access private
+/// @param {Map} $custom-map - The custom map.
+/// @param {String} $key - The 'key' get from custom map.
+/// @param {Map} $source-map - The source map.
+/// @returns {Map} -Returns the $result map extended with the properties of the validations.
+@function custom-map-validation($custom-map, $key, $source-map) {
+  $result: ();
+  @if map-has-key($source-map, $key) {
+    $source-value-type: type-of(map-get($source-map, $key));
+    $custom-value-type: type-of(map-get($custom-map, $key));
+
+    @if $source-value-type == $custom-value-type {
+      @if ($source-value-type == number) {
+        $source-value-unit: unitless(map-get($source-map, $key));
+        $custom-value-unit: unitless(map-get($custom-map, $key));
+        @if($source-value-unit == $custom-value-unit) {
+          @return null;
+        }
+        @else {
+          @if($source-value-unit) {
+            $result: '#{$key} should be "unitless"';
+            @return $result;
+          }
+          @else {
+            $result: '#{$key} should have a unit, like: [em, ex, %, px, cm, mm, in, pt, pc, rem]';
+            @return $result;
+          }
+        }
+      }
+      @else {
+        @return null;
+      }
+    }
+    @else {
+      $result: '#{$key} must be a #{$source-value-type}';
+      @return $result;
+    }
+  }
+  @warn "Invalid key `#{$key}`";
+  @return null;
+}

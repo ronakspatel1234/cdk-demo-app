@@ -1,0 +1,64 @@
+/// Position shorthand
+/// @param {String} $position - Either `absolute`, `relative` or `fixed`
+/// @param {Number} $top [null] - Top offset
+/// @param {Number} $right [null] - Right offset
+/// @param {Number} $bottom [null] - Bottom offset
+/// @param {Number} $left [null] - Left offset
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin transform($property) {
+  -webkit-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
+}
+
+@mixin transition($transition...) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transition-property($properties...) {
+  -webkit-transition-property: $properties;
+  -moz-transition-property: $properties;
+  transition-property: $properties;
+}
+
+@mixin transition-duration($property) {
+  -webkit-transition-duration: $property;
+  -moz-transition-duration: $property;
+  transition-duration: $property;
+}
+
+@mixin border-radius($radius) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -khtml-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin user-select($property) {
+  -webkit-user-select: $property;
+  -moz-user-select: $property;
+  -ms-user-select: $property;
+  user-select: $property;
+}
+
+@mixin flex-row-with-center() {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}

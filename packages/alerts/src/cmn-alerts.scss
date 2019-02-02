@@ -1,0 +1,213 @@
+// This contains all of the styles for the alerts
+// Define alert colors, border radius, and padding.
+$alert-padding-y:         0.75rem !default;
+$alert-padding-x:         1.25rem !default;
+$alert-margin-bottom:     1rem !default;
+$alert-link-font-weight:  700 !default;
+$alert-border-width:      1px !default;
+
+$alert-border-radius:      0 !default;
+$alert-icon-size:          16px !default;
+$alert-bg-level:           -10 !default; //Color level must be between -12 and 12
+$alert-border-level:       -8 !default; //Color level must be between -12 and 12
+$alert-color-level:        8 !default; //Color level must be between -12 and 12
+
+// Close
+$close-font-size:          1rem * 1.5 !default;
+
+// Define alert customisable property which can override by define custom values.
+$alert-variations: () !default;
+$alert-variations: map-merge(
+  (
+    'alert-border-radius':      $alert-border-radius,
+    'alert-icon-size':          $alert-icon-size,
+    'alert-bg-level':           $alert-bg-level,
+    'alert-color-level':        $alert-color-level,
+    'alert-border-level':       $alert-border-level,
+  ),
+  $alert-variations
+);
+
+// Define alert colors used for different type like [error, warning, info, success]
+$error:              map-get($cmn-red, 500) !default;
+$warning:            map-get($cmn-yellow, 500) !default;
+$info:               map-get($cmn-cyan, 500) !default;
+$success:            map-get($cmn-green, 500) !default;
+
+// Define a map for alert-colors.
+$alert-colors: () !default;
+$alert-colors: map-merge(
+  (
+    'error':              $error,
+    'warning':            $warning,
+    'info':               $info,
+    'success':            $success,
+  ),
+  $alert-colors
+);
+
+// Define alert box size which depends on alert-content's font-size.
+$alert-font-size: (
+  'mini':             0.7rem,
+  'tiny':             0.8rem,
+  'small':            0.9rem,
+  'large':            1rem,
+  'big':              1.2rem,
+  'huge':             1.4rem,
+  'massive':          1.6rem,
+);
+
+// Define a mixin 
+@mixin alert-variant($background, $color, $border-color) {
+  background: $background;
+  color: $color;
+  border-color: $border-color;
+
+  .alert-link {
+    color: darken($color, 10%);
+  }
+
+  .alert-icon {
+    span {
+      color: darken($color, 10%);
+    }
+  }
+}
+
+// Define alert size depend on classname: [mini, tiny, small, large, big, huge, massive]
+@each $size, $value in $alert-font-size {
+  .alert {
+    &.#{$size} {
+      font-size: $value;
+    }
+  }
+}
+
+// Base style
+button:focus {
+  outline: 0;
+}
+.alert {
+  display: flex;
+  position: relative;
+  font-family: inherit;
+  line-height: 1.5;
+  padding: $alert-padding-y $alert-padding-x;
+  margin-bottom: $alert-margin-bottom;
+  border: $alert-border-width solid transparent;
+  border-radius: map-get($alert-variations, 'border-radius');
+  text-align: left;
+  
+  .alert-icon {
+    align-self: flex-start;
+    margin-right: 0.75rem;
+    span {
+      font-size: map-get($alert-variations, 'font-size');
+    }
+  }
+  .alert-text {
+    align-self: baseline;
+    a {
+      font-weight: $alert-link-font-weight;
+      text-decoration: none;
+      color: inherit;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .alert-action {
+    margin-left: auto;
+    color: inherit;
+    .action-button {
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  &[dir='rtl'] {
+    text-align: right;
+    .alert-icon {
+      margin-right: 0;
+      margin-left: 0.75rem;
+    }
+    .alert-action {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+}
+.alert-heading {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  color: inherit;
+}
+
+// Dismissible alerts
+// Expand the right padding and account for the close button's positioning.
+.alert-dismissible {
+  padding-right: ($close-font-size + $alert-padding-x * 2);
+
+  // Adjust close link position
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $alert-padding-y $alert-padding-x;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    font-size: inherit;
+    cursor: pointer;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &[dir='rtl'] {
+    padding-right: $alert-padding-x;
+    padding-left: ($close-font-size + $alert-padding-x * 2);
+    .close {
+      right: auto;
+      left: 0;
+    }
+  }
+}
+
+// Mixin for get data from $map with function 
+@mixin cmn-alert-theme($theme) {
+  .alert {
+    @if(variable-exists(alert)) {
+      font-family: map-get($alert, 'alert-font-family');
+      border-radius: map-get($alert, 'alert-border-radius');
+    }
+    .alert-icon {
+      span {
+        @if(variable-exists(alert)) {
+          font-size: map-get($alert, 'alert-icon-size');
+        }
+      }
+    }
+  }
+
+  // Alternate styles
+  // Generate contextual modifier classes for colorizing the alert. [error, warning, success, info]
+  @each $color, $value in $alert-colors {
+    .alert-#{$color} {
+      @include alert-variant(
+        theme-color-level($value, if(variable-exists(alert) AND (map-get($alert, 'alert-bg-level') != null), map-get($alert, 'alert-bg-level'), $alert-bg-level)),
+        theme-color-level($value, if(variable-exists(alert) AND (map-get($alert, 'alert-color-level') != null), map-get($alert, 'alert-color-level'), $alert-color-level)), 
+        theme-color-level($value, if(variable-exists(alert) AND (map-get($alert, 'alert-border-level') != null), map-get($alert, 'alert-border-level'), $alert-border-level))
+      );
+    }
+  }
+}
+
+

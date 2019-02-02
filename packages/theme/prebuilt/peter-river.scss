@@ -1,0 +1,15 @@
+@import '../cmn-theme';
+
+// Define a theme.
+$primary: cmn-palette($cmn-peter-river);
+$accent:  cmn-palette($cmn-gray, A100, A200, A400);
+
+$cmn-themes: (
+  'primary'   :   $primary,
+  'accent'    :   $accent
+);
+
+$theme: cmn-light-theme($cmn-themes);
+
+// Include all theme styles for the components.
+@include cmn-all-component-theme($theme);

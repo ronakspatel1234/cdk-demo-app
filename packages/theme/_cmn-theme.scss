@@ -1,0 +1,21 @@
+// import component's .scss filepath 
+@import 'theming';
+@import 'core/cmn-functions';
+@import 'core/variables';
+@import 'core/cmn-mixins';
+@import 'core/elevation';
+@import 'core/core';
+@import 'components/cmn-icon';
+@import 'components/cmn-alerts';
+@import 'components/cmn-accordion';
+@import 'components/cmn-modal';
+
+
+@mixin cmn-all-component-theme($theme) {
+  // include component mixins foe theming
+  @include cmn-core-theme($theme);
+  @include cmn-icon-theme($theme);
+  @include cmn-alert-theme($theme);
+  @include cmn-accordion-theme($theme);
+  @include cmn-modal-theme($theme);
+}

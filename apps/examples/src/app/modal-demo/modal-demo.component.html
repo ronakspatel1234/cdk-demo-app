@@ -1,0 +1,52 @@
+ <cmn-modal #cmnModal1='modal' cdkTrapFocus  [configuration]="{'size': 'modal-sm'}" [(status)]="status" (initialized)="initialized($event)">
+  <h1 *cmnModalTemplate=header> first modal1</h1>
+  <ng-template *cmnModalTemplate=body>
+    veniam porro, deserunt expedita, vitae tenetur?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda,
+    quo dolore.
+    Quibusdam nesciunt illum officia porro.
+  </ng-template>
+</cmn-modal>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="btnClick(cmnModal1)">
+  {{btn?btn.name1:'button'}}
+</button> <br><br><br><br>
+
+
+<cmn-modal #cmnModal2='modal' [configuration]="{ 'size': 'modal-xl','isAutoDismissible': true,'autoDismissTimeOut': 5000}" [(status)]="status" (initialized)="initialized($event)">
+  <h1 *cmnModalTemplate=header> first modal2</h1>
+  <div *cmnModalTemplate=body>
+    veniam porro, deserunt expedita, vitae tenetur?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda,
+    quo dolore.
+    Quibusdam nesciunt illum officia porro.
+  </div>
+</cmn-modal>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="btnClick(cmnModal2)">
+  {{btn?btn.name2:'button'}}
+</button> <br><br><br><br>
+
+
+<cmn-modal #cmnModal3='modal' [configuration]="{ 'size': 'modal-lg','actionButtonText': {'positive': 'positive','negative': 'negative'
+    }}" [(status)]="status" (initialized)="initialized($event)">
+  <h1 *cmnModalTemplate=header> first modal3</h1>
+  <div *cmnModalTemplate=body>
+    veniam porro, deserunt expedita, vitae tenetur?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda,
+    quo dolore.
+    Quibusdam nesciunt illum officia porro.
+  </div>
+</cmn-modal>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="btnClick(cmnModal3)">
+  {{btn?btn.name3:'button'}}
+</button> <br><br><br><br>
+ 
+<cmn-modal #cmnModal4='modal' [configuration]=""  (initialized)="initialized($event)">
+  <h1 *cmnModalTemplate=header> first modal3</h1>
+  
+      <!-- <exm-modal-entry *cmnModalTemplate=body></exm-modal-entry> -->
+  
+</cmn-modal>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="btnClick(cmnModal4)">
+  {{btn?btn.name4:'button'}}
+</button> <br><br><br><br>

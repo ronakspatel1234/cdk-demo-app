@@ -1,0 +1,282 @@
+// Define accordion header color, border-radius, padding
+
+$accordion-padding-y:         0.75rem !default;
+$accordion-padding-x:         1.25rem !default;
+$accordion-border-color:    rgba(0,0,0,0.08);
+$accordion-border-radius:     0px !default;
+$accordion-margin-bottom:     1rem !default;
+
+$accordion-header-bg:         $dark-primary-text;
+$accordion-header-color:      $light-primary-text;
+$accordion-elevation-level:   1 !default;
+
+/// Default accordion-variations
+/// @type Map
+/// @param {Color} $accordion-header-bg - The default accordion header background color.
+/// @param {Color} $accordion-header-color - The default accordion header text color.
+/// @param {Number} $accordion-border-radius - The default border-radius of accordion.
+/// @param {List} $font-family-base - The default font-family of accordion.
+/// @param {Number} $font-size-base - The default accordion content font-size.
+/// @param {Number} $accordion-elevation-level - The default level of accordion elevation.
+
+$accordion-variations: () !default;
+$accordion-variations: map-merge(
+  (
+    'accordion-header-bg':            $accordion-header-bg,
+    'accordion-header-color':         $accordion-header-color,
+    'accordion-border-radius':        $accordion-border-radius,
+    'accordion-font-family':          $font-family-base,
+    'accordion-font-size':            $font-size-base,
+    'accordion-elevation-level':      $accordion-elevation-level,
+  ),
+  $accordion-variations
+);
+
+.cmn-accordion {
+  margin-bottom: $accordion-margin-bottom;
+  text-align: left;
+  &[dir='rtl'],
+  [dir='rtl'] & {
+    text-align: right;
+  }
+  &.header-at-bottom {
+    .cmn-accordion-header{
+      order: 3;
+    }
+  }
+  &.indicator-at-start {
+    .cmn-accordion-title {
+      order: 2;
+    }
+    .cmn-accordion-indicator {
+      order: 1;
+      margin-right: 10px;
+    }
+    &[dir='rtl'],
+    [dir='rtl'] & {
+      .cmn-accordion-indicator {
+        margin-left: 10px;
+        margin-right: 0px;
+      }
+    }
+  }
+  &.accordion-resize {
+    resize: both;
+    overflow: auto;
+  }
+  &.elevation {
+    .cmn-accordion-panel {
+      box-shadow: cmn-elevation($elevations, 1);
+      &.active {
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+      }
+    }
+  }
+}
+.cmn-accordion-panel {
+  @include flex-column();
+  border: 1px solid $accordion-border-color;
+  border-radius: $accordion-border-radius;
+  overflow: hidden;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  &:first-child {
+    border-bottom: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  &:last-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+  &:only-child {
+    border-bottom: 1px solid $accordion-border-color;
+    border-radius: 0px;
+  }
+  &:not(:first-of-type):not(:last-of-type) {
+    border-bottom: 0px;
+    border-radius: 0px;
+  }
+  &:not(.active) {
+    .cmn-accordion-indicator::after {
+      @include transform(rotate(45deg));
+    }
+    // .cmn-accordion-footer {
+    //   display: none;
+    // }
+  }
+  &.active {
+    border-bottom: 1px solid $accordion-border-color;
+  }
+}
+.cmn-accordion-header {
+  @include flex-row-with-center();
+  padding: $accordion-padding-y $accordion-padding-x;
+  margin-bottom: -1px;
+  font-family: inherit;
+  cursor: pointer;
+  .cmn-accordion-title {
+    flex-grow: 1;
+    h1, h2, h3, h4, h5, h6,
+    .h1, .h2, .h3, .h4, .h5, .h6 {
+      margin-bottom: 0px;
+    }
+    button {
+      background: transparent;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      padding: 0px;
+    }
+  }
+}
+
+.cmn-accordion-indicator::after {
+  content: " ";
+  border-style: solid;
+  border-width: 0px 2px 2px 0px;
+  display: inline-block;
+  padding: 3px;
+  @include transform(rotate(-135deg));
+  vertical-align: middle;
+}
+.cmn-accordion-content {
+  font-family: inherit;
+  overflow-y: auto;
+  &:not(.cmn-expanded) {
+    display: none;
+  }
+  .cmn-accordion-content-body {
+    padding: $accordion-padding-y $accordion-padding-x;
+    overflow: hidden;
+    overflow-y: auto;
+    font-family: inherit;
+  }
+}
+.cmn-accordion-footer {
+  @include flex-row-with-center();
+  padding: 0.5rem $accordion-padding-x;
+  border-top: 1px solid $accordion-border-color;
+}
+
+/// cmn-accordion-theme
+/// @param {Map} $theme - The theme used as basis for styling the component.
+/// @param {Map} $accordion - The accordion used to customise default style
+/// @param {Map} $accordion-variations - The accordion-variations used for default component style.
+/// @requires custom-map-validation
+/// @requires cmn-elevation
+/// @requires cmn-color
+/// @requires color-yiq
+
+@mixin cmn-accordion-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  @if variable-exists(accordion) {
+    @each $key, $value in $accordion {
+      $result: custom-map-validation($accordion, $key, $accordion-variations);
+      @if ($result) {
+        @error 'Accordion: #{$result}';
+      }
+    }
+  }
+  .cmn-accordion {
+    &.elevation {
+      .cmn-accordion-panel {
+        @if variable-exists(accordion) {
+          @if (map-has-key($accordion, 'accordion-elevation-level') == true) {
+            box-shadow: cmn-elevation($elevations, map-get($accordion, 'accordion-elevation-level'));
+          }
+        }
+      }
+    }
+  } 
+  .cmn-accordion-panel {
+    background: cmn-color($background, card);
+    color: cmn-color($foreground, text);
+    border-color: cmn-color($foreground, divider);
+
+    &:only-child {
+      border-color: cmn-color($foreground, divider);
+    }
+    &.active {
+      border-color: cmn-color($foreground, divider);
+    }
+    @if variable-exists(accordion) {
+      border-radius: map-get($accordion, 'accordion-border-radius');
+      font-family: map-get($accordion, 'accordion-font-family');
+      font-size: map-get($accordion, 'accordion-font-size');
+      &.active {
+        border-bottom-left-radius: map-get($accordion, 'accordion-border-radius');
+        border-bottom-right-radius: map-get($accordion, 'accordion-border-radius');
+      }
+    }
+  }
+
+  .cmn-accordion-footer {
+    border-top-color: cmn-color($foreground, divider);
+  }
+
+  .cmn-accordion-panel:not(.active) {
+    .cmn-accordion-header {
+      &:not([aria-disabled='true']) {
+        background: cmn-color($background, card);
+        color: cmn-color($foreground, text);
+        &:hover {
+          background: cmn-color($background, hover);
+        }
+      }
+    }
+    .cmn-accordion-indicator::after {
+      color: cmn-color($foreground, text);
+    }
+  }
+
+  // Disable the hover on touch devices since it can appear like it is stuck. We can't use
+  // `@media (hover)` above, because the desktop support browser support isn't great.
+  @media (hover: none) {
+    .cmn-accordion-panel:not(.active):not([aria-disabled='true'])
+      .cmn-accordion-header:hover {
+      background: cmn-color($background, hover);
+    }
+  }
+
+  .cmn-accordion-header {
+    background: map-get($theme, primary);
+    color: color-yiq(map-get($theme, primary));
+    @if variable-exists(accordion) {
+      background: map-get($accordion, 'accordion-header-bg');
+      @if (map-has-key($accordion, 'accordion-header-color') == true) {
+        color: map-get($accordion, 'accordion-header-color');
+      }
+      @else {
+        @if(map-has-key($accordion, 'accordion-header-bg') == true) {
+          color: color-yiq(map-get($accordion, 'accordion-header-bg'));
+        }
+      }
+    }
+  }
+
+  .cmn-accordion-indicator::after {
+    color: color-yiq(map-get($theme, primary));
+    @if variable-exists(accordion) {
+      @if (map-has-key($accordion, 'accordion-header-color') == true) {
+        color: map-get($accordion, 'accordion-header-color');
+      }
+      @else {
+        @if(map-has-key($accordion, 'accordion-header-bg') == true) {
+          color: color-yiq(map-get($accordion, 'accordion-header-bg'));
+        }
+      }
+    }
+  }
+
+  .cmn-accordion-header[aria-disabled='true'] {
+    color: cmn-color($foreground, disabled-button);
+
+    .cmn-accordion-title {
+      color: inherit;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+$blue : #007bff;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$white: #fff;
+$gray: #6c757d;
+$gray-dark: #343a40;
+$black : #000000;
+$default: #ecf0f1;
+
+$primary: $blue;
+$secondary : $gray;
+$success: $green;
+$warning: $orange;
+$info: $blue;
+$danger: $red;
+
+$datatable-header-bg-color: $default;
+
+$yiq-contrast-threshold: 150;
+
+$yiq-text-dark: $gray-dark;
+$yiq-text-light: $white;
+
+/**
+    This function accepts a color (datatable-header-bg-color) and returns a related header text color. To do so, it calculates the threshold value of the
+    background and return a text color value.
+ **/
+@function color-yiq($color) {
+    $r: red($color);
+    $g: green($color);
+    $b: blue($color);
+
+    $yiq : (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+    @if($yiq >= $yiq-contrast-threshold) {
+        @return $yiq-text-dark;
+    } @else {
+        @return $yiq-text-light;
+    }
+}
+/**
+    This function accepts a color and its opacity, and it returns an rgba representation of the same. To do so, it extracts the r g b value of the color and
+    applies the specified opacity to it.
+**/
+@function color-alpha($color , $opacity) {
+    $r: red($color);
+    $g: green($color);
+    $b: blue($color);
+
+    @return rgba($r, $g, $b, $opacity);
+}

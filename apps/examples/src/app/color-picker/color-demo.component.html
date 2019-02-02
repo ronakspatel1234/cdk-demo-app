@@ -1,0 +1,19 @@
+<div class="header" [ngStyle]="{backgroundColor: selectedColor.value}">
+  <h2 cdkDragLockAxis="x" cdkDrag>Welcome to the CDK World</h2>
+</div>
+<div class="content example-boundary">
+  <span>{{selectedColor.value}}</span>
+  <button [color-picker-trigger]="colorPicker" cdkDragBoundary=" .example-boundary" cdkDrag>click me</button>
+</div>
+<color-picker class="example-boundary" [colors]="colors" [(value)]="selectedColor" #colorPicker cdkDrag></color-picker>
+<div class="example-focus-monitor">
+  <button #element>Focus Monitored Element ({{elementOrigin}})</button>
+</div>
+<hr>
+<div class="example-focus-monitor">
+    <button cdkMonitorSubtreeFocus
+            (cdkFocusChange)="elementOrigin = formatOrigin($event); markForCheck()">
+      Focus Monitored Element ({{elementOrigin}})
+    </button>
+  </div>
+

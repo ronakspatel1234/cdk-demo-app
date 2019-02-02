@@ -1,0 +1,9 @@
+{
+    "$schema": "../../node_modules/ng-packagr/package.schema.json",
+    "name": "@commons/core",
+    "version": "6.0.0-0",
+    "peerDependencies": {
+        "@angular/common": "^6.0.0",
+        "@angular/core": "^6.0.0"
+    }
+}

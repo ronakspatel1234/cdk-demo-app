@@ -1,0 +1,56 @@
+/// Default button color 
+$cmn-button-color:      #f0f0f0;
+
+/// Justify Content: [flex-start|flex-end|center|space-between|space-around|initial|inherit]
+$justify-content: () !default;
+$justify-content: map-merge(
+  (
+    'start':              flex-start,
+    'end':                flex-end,
+    'center':             center,
+    'between':            space-between,
+    'around':             space-around,
+  ),
+  $justify-content
+);
+
+/// Item's alignment: [flex-start|flex-end|center|baseline|stretch|initial|inherit]
+$align-items: () !default;
+$align-items: map-merge(
+  (
+    'start':              flex-start,
+    'end':                flex-end,
+    'center':             center,
+    'baseline':           baseline,
+    'stretch':            stretch,
+  ),
+  $align-items
+);
+
+/// Content positions depend on perticular division or device-body.
+/// [top-left, top-center, top-right, center-left, centered, center-right, bottom-left, bottom-center, bottom-right]
+$top-left: flex-start, flex-start;
+$top-center: flex-start, center;
+$top-right: flex-start, flex-end;
+$center-left: center, flex-start;
+$centered: center, center;   
+$center-right: center, flex-end;         
+$bottom-left: flex-end, flex-start;
+$bottom-center: flex-end, center;         
+$bottom-right: flex-end, flex-end;      
+
+$content-position: () !default;
+$content-position: map-merge(
+  (
+    'top-left':               $top-left,
+    'top-center':             $top-center,
+    'top-right':              $top-right,
+    'center-left':            $center-left,
+    'centered':               $centered,
+    'center-right':           $center-right,
+    'bottom-left':            $bottom-left,
+    'bottom-center':          $bottom-center,
+    'bottom-right':           $bottom-right,
+  ),
+  $content-position
+);

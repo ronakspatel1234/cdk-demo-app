@@ -1,0 +1,209 @@
+<ng-container #icon>
+  <ng-container> 
+        <ng-container *ngIf="isFontAwesome">
+          <ng-container *ngIf="!isOverlayIcon && !isAlert && !isBadgeIcon">
+            <span [ngClass]="iconClass" [ngStyle]="iconStyle"></span>
+          </ng-container>
+          <ng-container *ngIf="isOverlayIcon">
+            <span class="icon-group">
+              <span [ngClass]="iconClass" [ngStyle]="iconStyle"></span>
+              <span [ngClass]="overlayIconClass" [ngStyle]="overlayIconStyle"></span>
+            </span>
+          </ng-container>
+          <ng-container *ngIf="isAlert">
+            <span class="icon-group">
+              <span [ngClass]="iconClass" [ngStyle]="iconStyle"></span>
+              <span [ngClass]="alertIconClass" [ngStyle]="alertIconStyle"></span>
+            </span>
+          </ng-container>
+          <ng-container *ngIf="isBadgeIcon">
+            <span class="icon-group">
+              <span [ngClass]="iconClass" [ngStyle]="iconStyle"></span>
+              <span [ngClass]="badgeIconClass" [ngStyle]="badgeIconStyle"></span>
+            </span>
+          </ng-container>
+        </ng-container>  
+        <ng-container *ngIf="isMaterial">
+          <ng-container *ngIf="!isOverlayIcon && !isAlert">
+            <span [ngClass]="iconClass" [ngStyle]="iconStyle">{{material}}</span>
+          </ng-container>
+          <ng-container *ngIf="isOverlayIcon">
+          <span class="icon-group">
+            <span [ngClass]="iconClass" [ngStyle]="iconStyle">{{material}}</span>
+            <span [ngClass]="overlayIconClass" [ngStyle]="overlayIconStyle">{{overlayIconName}}</span>
+          </span>
+        </ng-container>
+        <ng-container *ngIf="isAlert">
+            <span class="icon-group">
+              <span [ngClass]="iconClass" [ngStyle]="iconStyle">{{material}}</span>
+              <span [ngClass]="alertIconClass" [ngStyle]="alertIconStyle">{{alertIconName}}</span>
+            </span>
+          </ng-container>
+          <ng-container *ngIf="isBadge">
+            <span class="icon-group">
+              <span [ngClass]="iconClass" [ngStyle]="iconStyle"></span>
+              <span [ngClass]="badgeIconClass" [ngStyle]="badgeIconStyle"></span>
+            </span>
+          </ng-container>
+        </ng-container>     
+        <ng-container>
+          <div #dataContainer>
+          </div>
+        </ng-container>    
+  </ng-container>
+</ng-container>
+<!-- <div style="background: #000000;">
+          <span [ngClass]="iconClass" [ngStyle]="iconStyle"></span>
+      </div> -->
+<!-- <span class="{{fontAwesome}} cmn-icon xx-small"></span>
+    <span class="{{fontAwesome}} cmn-icon x-small"></span>
+    <span class="{{fontAwesome}} cmn-icon small"></span>
+    <span class="{{fontAwesome}} cmn-icon"></span>
+    <span class="{{fontAwesome}} cmn-icon large"></span>
+    <span class="{{fontAwesome}} cmn-icon x-large disabled"></span>
+
+    <div>
+      <span class="{{fontAwesome}} cmn-icon large is-highlight"></span>
+      <span class="{{fontAwesome}} cmn-icon large is-error"></span>
+      <span class="{{fontAwesome}} cmn-icon large is-warning"></span>
+      <span class="{{fontAwesome}} cmn-icon large is-success"></span>
+      <span class="{{fontAwesome}} cmn-icon large is-info"></span>
+    </div>
+    <p>Inverse color</p>
+    <div style="background: #000000;">
+      <span class="{{fontAwesome}} cmn-icon is-inverse is-highlight"></span>
+      <span class="{{fontAwesome}} cmn-icon is-inverse is-error"></span>
+      <span class="{{fontAwesome}} cmn-icon is-inverse is-warning"></span>
+      <span class="{{fontAwesome}} cmn-icon is-inverse is-success"></span>
+      <span class="{{fontAwesome}} cmn-icon is-inverse is-info"></span>
+    </div>
+    <p>Directions and Flip</p>
+    <div>
+      <span class="{{fontAwesome}} cmn-icon large up"></span>
+      <span class="{{fontAwesome}} cmn-icon large right"></span>
+      <span class="{{fontAwesome}} cmn-icon large bottom"></span>
+      <span class="{{fontAwesome}} cmn-icon large left"></span>
+      <span class="{{fontAwesome}} cmn-icon large flip-horizontal"></span>
+      <span class="{{fontAwesome}} cmn-icon large flip-vertical"></span>
+    </div>
+    <p>Loading</p>
+    <div>
+      <span class="{{fontAwesome}} cmn-icon large spin-clockwise"></span>
+      <span class="{{fontAwesome}} cmn-icon large spin-anticlockwise"></span>
+    </div>
+    <p>icon with circle and border</p>
+    <div>
+      <span class="{{fontAwesome}} cmn-icon small circular"></span>
+      <span class="{{fontAwesome}} cmn-icon small circular is-error"></span>
+      <span class="{{fontAwesome}} cmn-icon small circular is-inverse"></span>
+      <span class="{{fontAwesome}} cmn-icon small circular is-inverse is-success"></span>
+    </div>
+    <div>
+      <span class="{{fontAwesome}} cmn-icon small bordered"></span>
+      <span class="{{fontAwesome}} cmn-icon small bordered is-error"></span>
+      <span class="{{fontAwesome}} cmn-icon small bordered is-inverse"></span>
+      <span class="{{fontAwesome}} cmn-icon small bordered is-inverse is-success"></span>
+    </div>
+    <p>Icon group</p>
+    <div>
+      <span class="icon-group">
+        <span class="fa fa-ban cmn-icon x-large is-error"></span>
+        <span class="{{fontAwesome}} cmn-icon"></span>
+      </span>
+    </div>
+    <p>Corner Icon</p>
+    <div>
+      <span class="icon-group">
+        <span class="fa fa-envelope cmn-icon x-large"></span>
+        <span class="fa fa-plus cmn-icon corner-icon top-left is-inverse"></span>
+      </span>
+      <span class="icon-group">
+        <span class="fa fa-envelope cmn-icon x-large"></span>
+        <span class="fa fa-plus cmn-icon corner-icon top-right"></span>
+      </span>
+      <span class="icon-group">
+        <span class="fa fa-envelope cmn-icon x-large"></span>
+        <span class="fa fa-plus cmn-icon corner-icon bottom-right"></span>
+      </span>
+      <span class="icon-group">
+        <span class="fa fa-envelope cmn-icon x-large"></span>
+        <span class="fa fa-plus cmn-icon corner-icon bottom-left"></span>
+      </span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="material">
+    <span class="material-icons cmn-icon xx-small">{{material}}</span>
+    <span class="material-icons cmn-icon x-small">{{material}}</span>
+    <span class="material-icons cmn-icon small">{{material}}</span>
+    <span class="material-icons cmn-icon">{{material}}</span>
+    <span class="material-icons cmn-icon large">{{material}}</span>
+    <span class="material-icons cmn-icon x-large disabled">{{material}}</span>
+
+    <div>
+      <span class="material-icons cmn-icon is-highlight">{{material}}</span>
+      <span class="material-icons cmn-icon is-error">{{material}}</span>
+      <span class="material-icons cmn-icon is-warning">{{material}}</span>
+      <span class="material-icons cmn-icon is-success">{{material}}</span>
+      <span class="material-icons cmn-icon is-info">{{material}}</span>
+    </div>
+    <p>Inverse color</p>
+    <div style="background: #000000;">
+      <span class="material-icons cmn-icon is-inverse is-highlight">{{material}}</span>
+      <span class="material-icons cmn-icon is-inverse is-error">{{material}}</span>
+      <span class="material-icons cmn-icon is-inverse is-warning">{{material}}</span>
+      <span class="material-icons cmn-icon is-inverse is-success">{{material}}</span>
+      <span class="material-icons cmn-icon is-inverse is-info">{{material}}</span>
+    </div>
+    <p>Directions and Flip</p>
+    <div>
+      <span class="material-icons cmn-icon large up">{{material}}</span>
+      <span class="material-icons cmn-icon large right">{{material}}</span>
+      <span class="material-icons cmn-icon large bottom">{{material}}</span>
+      <span class="material-icons cmn-icon large left">{{material}}</span>
+      <span class="material-icons cmn-icon large flip-horizontal">{{material}}</span>
+      <span class="material-icons cmn-icon large flip-vertical">{{material}}</span>
+    </div>
+    <p>Loading</p>
+    <div>
+      <span class="material-icons cmn-icon large spin-clockwise">{{material}}</span>
+      <span class="material-icons cmn-icon large spin-anticlockwise">{{material}}</span>
+    </div>
+    <p>icon with circle and border</p>
+    <div>
+      <span class="material-icons cmn-icon small circular">{{material}}</span>
+      <span class="material-icons cmn-icon small circular is-error">{{material}}</span>
+      <span class="material-icons cmn-icon small circular is-inverse">{{material}}</span>
+      <span class="material-icons cmn-icon small circular is-inverse is-success">{{material}}</span>
+    </div>
+    <div>
+      <span class="material-icons cmn-icon small bordered">{{material}}</span>
+      <span class="material-icons cmn-icon small bordered is-error">{{material}}</span>
+      <span class="material-icons cmn-icon small bordered is-inverse">{{material}}</span>
+      <span class="material-icons cmn-icon small bordered is-inverse is-success">{{material}}</span>
+    </div>
+    <p>Icon group</p>
+    <div>
+      <span class="icon-group">
+        <span class="material-icons cmn-icon x-large is-error">block</span>
+        <span class="material-icons cmn-icon large">home</span>
+      </span>
+    </div>
+    <p>Corner Icon</p>
+    <div>
+      <span class="icon-group">
+        <span class="material-icons cmn-icon x-large">mail</span>
+        <span class="material-icons cmn-icon corner-icon top-left is-inverse">add</span>
+      </span>
+      <span class="icon-group">
+        <span class="material-icons cmn-icon x-large">mail</span>
+        <span class="material-icons cmn-icon corner-icon top-right">add</span>
+      </span>
+      <span class="icon-group">
+        <span class="material-icons cmn-icon x-large">mail</span>
+        <span class="material-icons cmn-icon corner-icon bottom-right">add</span>
+      </span>
+      <span class="icon-group">
+        <span class="material-icons cmn-icon x-large">mail</span>
+        <span class="material-icons cmn-icon corner-icon bottom-left">add</span>
+      </span>
+    </div> -->

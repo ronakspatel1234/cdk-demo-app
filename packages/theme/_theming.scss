@@ -1,0 +1,65 @@
+@import 'palette';
+
+@function cmn-contrast($palette, $hue) {
+  @return map-get(map-get($palette, contrast), $hue);
+}
+// Creates a map of hues to colors for a theme.
+// @param $color-map
+// @param $primary
+// @param $lighter
+@function cmn-palette($base-palette, $default: 500, $lighter: 100, $darker: 700) {
+  $result: map-get($base-palette, $default);
+
+  @return $result;
+}
+
+// @param $color-map The theme palette (output of cmn-palette).
+// @param $hue The hue from the palette to use. If this is a value between 0 and 1, it will
+//     be treated as opacity.
+// @param $opacity The alpha channel value for the color.
+@function cmn-color($palette, $hue: default, $opacity: null) {
+  // If hueKey is a number between zero and one, then it actually contains an
+  // opacity value, so recall this function with the default hue and that given opacity.
+  @if type-of($hue)==number and $hue>=0 and $hue <=1 {
+    @return cmn-color($palette, default, $hue);
+  }
+  $color: map-get($palette, $hue);
+  $opacity: if($opacity==null, opacity($color), $opacity);
+  @return rgba($color, $opacity);
+}
+
+
+// Creates a container object for a light theme to be given to individual component theme mixins.
+@function cmn-light-theme($theme) {
+  $primary: map-get($theme, 'primary');
+  $accent: if($primary == map-get($theme, 'accent') , color-yiq($primary), map-get($theme, 'accent'));
+  $warn: if(map-get($theme, 'warn'), map-get($theme, 'warn'), cmn-palette($cmn-red));
+
+  $result: (
+    'primary': $primary,
+    'accent': $accent,
+    'warn': $warn,
+    'is-dark': false,
+    'foreground': $cmn-light-theme-foreground,
+    'background': $cmn-light-theme-background,
+  );
+  @return $result;
+}
+
+
+// Creates a container object for a dark theme to be given to individual component theme mixins.
+@function cmn-dark-theme($theme) {
+  $primary: map-get($theme, 'primary');
+  $accent: if($primary == map-get($theme, 'accent') , color-yiq($primary), map-get($theme, 'accent'));
+  $warn: if(map-get($theme, 'warn'), map-get($theme, 'warn'), cmn-palette($cmn-red));
+  
+  $result: (
+    'primary': $primary,
+    'accent': $accent,
+    'warn': $warn,
+    'is-dark': true,
+    'foreground': $cmn-dark-theme-foreground,
+    'background': $cmn-dark-theme-background,
+  );
+  @return $result;
+}

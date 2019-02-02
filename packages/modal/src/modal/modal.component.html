@@ -1,0 +1,38 @@
+<!-- HTML for the component -->
+
+
+<div class="cmn-modal content-centered"   *ngIf="isOpen" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle"
+  [style.z-index]='configuration.zindex' aria-hidden="true" aria-describedby="dialog-description" #modalTemplateRef>
+  <div class="modal-dialog " [style.height]='configuration.height' [style.width]='configuration.width'
+    [style.max-height]='configuration.maxHeight' [style.max-width]='configuration.maxWidth' [style.z-index]='configuration.zindex+1'
+    [ngClass]='configuration.size' [@fadeInDown] role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalTitle">
+          <ng-container #modalHeaderRef></ng-container>
+        </h5>
+        <div class="modal-close-button" *ngIf="configuration.isDismissible">
+          <button type="button" class="close" aria-label="Close" data-dismiss="cmn-modal" (click)="onDismiss()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" [style.height]='configuration.contentHeight'>
+        <ng-container #modalBodyRef></ng-container>
+      </div>
+      <div class="modal-footer">
+        <div class="footer-action-button " [ngClass]="configuration.actionButtonAlignment">
+          <ng-container #modalFooterRef>
+            <button class="btn btn-primary ripple " type="button" *ngIf="configuration.actionButton.isPositive" (click)='onPositiveAction()'>
+              {{configuration.actionButtonText.positive}}</button>
+            <button class="btn btn-outline ripple " type="button" data-dismiss="cmn-modal" *ngIf="configuration.actionButton.isNegative"
+              (click)='onNegativeAction()'>
+              {{configuration.actionButtonText.negative}}</button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cmn-modal-backdrop" *ngIf="isOpen && configuration.allowBackdrop" (click)='onBackdropClick()'
+    [style.z-index]="configuration.zindex" aria-hidden="true"></div>
+</div>

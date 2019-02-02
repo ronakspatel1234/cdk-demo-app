@@ -1,0 +1,192 @@
+/// Default icon-size
+/// @type Map
+/// Define various icon size.
+$icon-size: (
+  'xx-small':         1rem, // 16px
+  'x-small':          1.25rem, // 20px
+  'small':            1.375rem, //22px
+  'large':            2rem, // 32px
+  'x-large':          3rem, // 48px
+);
+
+/// Icon colors
+$icon-highlight:            map-get($cmn-blue, 500);
+$icon-error:                map-get($cmn-red, 500);
+$icon-warning:              map-get($cmn-yellow, 500);
+$icon-success:              map-get($cmn-green, 500);
+$icon-info:                 map-get($cmn-cyan, 500);
+
+/// Default icon-colors
+/// @type Map
+/// Define various icon colors.
+$icon-colors: (
+  'is-highlight':         $icon-highlight,
+  'is-error':             $icon-error,
+  'is-warning':           $icon-warning,
+  'is-success':           $icon-success,
+  'is-info':              $icon-info,
+);
+
+// Icon directions
+$icon-up:                0;
+$icon-right:             90;
+$icon-bottom:            180;
+$icon-left:              270;
+/// Default icon-directions
+/// @type Map
+/// Define various icon directions.
+$icon-directions: (
+  'up':             $icon-up,
+  'right':          $icon-right,
+  'bottom':         $icon-bottom,
+  'left':           $icon-left,
+);
+
+$icon-font-size: 1.5rem;
+$icon-line-height: 1;
+$icon-color: $dark-primary-text;
+$icon-border-color: map-get($cmn-grey, 300);
+
+.cmn-icon {
+  display: inline-block;
+  margin-right: 0.25rem;
+  font-size: $icon-font-size;
+  line-height: $icon-line-height;
+  color: $icon-color;
+  opacity: 1;
+  &.disabled {
+    opacity: 0.4;
+  }
+  &.flip-horizontal {
+    @include transform(scale(-1, 1));
+  }
+  &.flip-vertical {
+    @include transform(scale(1, -1));
+  }
+  &.spin-clockwise {
+    animation: clockwiseSpin 2s infinite linear;
+  }
+  &.spin-anticlockwise {
+    animation: antiClockwiseSpin 2s infinite linear;
+  }
+  &.bordered {
+    padding: 0.25rem;
+    border: 1px solid $icon-border-color;
+    &.is-inverse {
+      background-color: map-get($cmn-grey, 900);
+      color: map-get($cmn-grey, A100);
+      border-color: map-get($cmn-grey, 900);
+    }
+  }
+  &.circular {
+    @extend .bordered;
+    border-radius: 50%;
+  }
+}
+// Group icons
+.icon-group {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  .cmn-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translateX(-50%) translateY(-50%));
+    margin: 0;
+    &:first-child {
+      position: static;
+      width: auto;
+      height: auto;
+      @include transform(none);
+      vertical-align: middle;
+    }
+    &.corner-icon {
+      &.top-left {
+        top: 0;
+        left: 0;
+        @include transform(none);
+        text-shadow: -1px -1px 0 $light-primary-text, 1px -1px 0 $light-primary-text, -1px 1px 0 $light-primary-text, 1px 1px 0 $light-primary-text;
+      }
+      &.top-right {
+        top: 0;
+        left: auto;
+        right: 0;
+        @include transform(none);
+        text-shadow: -1px -1px 0 $light-primary-text, 1px -1px 0 $light-primary-text, -1px 1px 0 $light-primary-text, 1px 1px 0 $light-primary-text;
+      }
+      &.bottom-right {
+        top: auto;
+        left: auto;
+        right: 0;
+        bottom: 0;
+        @include transform(none);
+        text-shadow: -1px -1px 0 $light-primary-text, 1px -1px 0 $light-primary-text, -1px 1px 0 $light-primary-text, 1px 1px 0 $light-primary-text;
+      }
+      &.bottom-left {
+        top: auto;
+        left: 0;
+        bottom: 0;
+        @include transform(none);
+        text-shadow: -1px -1px 0 $light-primary-text, 1px -1px 0 $light-primary-text, -1px 1px 0 $light-primary-text, 1px 1px 0 $light-primary-text;
+      }
+      &.is-inverse {
+        text-shadow: -1px -1px 0 $dark-primary-text, 1px -1px 0 $dark-primary-text, -1px 1px 0 $dark-primary-text, 1px 1px 0 $dark-primary-text;
+        color: $light-primary-text;
+      }
+    }
+  }
+}
+
+
+// Generate contextual modifier classes for font-size of icon: [mini, tiny, small, large, big, huge, massive]
+@each $size, $value in $icon-size {
+  .cmn-icon {
+    &.#{$size} {
+      font-size: $value;
+    }
+  }
+}
+
+// Generate contextual modifier classes for icon colors:
+// is-highlight
+// is-error
+// is-warning
+// is-success
+// is-info
+// is-inverse
+@each $color, $value in $icon-colors {
+  .cmn-icon {
+    &.#{$color} {
+      color: $value;
+      &.is-inverse {
+        color: lighten($value, 10%);
+      }
+    }
+    &.circular,
+    &.bordered {
+      &.#{$color} {
+        color: $value;
+        &.is-inverse {
+          background-color: $value;
+          border-color: $value;
+          color: lighten($value, 50%);
+        }
+      }
+    }
+  }
+}
+
+// Generate contextual modifier classes for icon directions: [up, right, bottom, left]
+@each $direction, $value in $icon-directions {
+  .cmn-icon {
+    &.#{$direction} {
+      @include transform(rotate(#{$value}deg));
+    }
+  }
+}
+
+@mixin cmn-icon-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+}
